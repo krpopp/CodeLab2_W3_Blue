@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
 
 public class GameManagerScript : MonoBehaviour {
 
@@ -25,7 +27,16 @@ public class GameManagerScript : MonoBehaviour {
 		inputManager = GetComponent<InputManagerScript>();
 		repopulateManager = GetComponent<RepopulateScript>();
 		moveTokenManager = GetComponent<MoveTokensScript>();
-	}
+
+		// this is my nightmare code
+		List<GameObject> objectsInScene = new List<GameObject>(); 
+
+        foreach (GameObject go in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[])
+        {
+            if (!EditorUtility.IsPersistent(go.transform.root.gameObject) && !(go.hideFlags == HideFlags.NotEditable || go.hideFlags == HideFlags.HideAndDontSave))
+                objectsInScene.Add(go);
+        }
+    }
 
 	public virtual void Update(){
 		if(!GridHasEmpty()){
