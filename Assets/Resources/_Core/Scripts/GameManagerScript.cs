@@ -23,8 +23,8 @@ public class GameManagerScript : MonoBehaviour {
 		MakeGrid();
 		matchManager = GetComponent<MatchManagerScript>();
 		inputManager = GetComponent<InputManagerScript>();
-		repopulateManager = GetComponent<RepopulateScript>();
-		moveTokenManager = GetComponent<MoveTokensScript>();
+		//repopulateManager = GetComponent<RepopulateScript>();
+		//moveTokenManager = GetComponent<MoveTokensScript>();
 	}
 
 	public virtual void Update(){
@@ -35,13 +35,18 @@ public class GameManagerScript : MonoBehaviour {
 				inputManager.SelectToken();
 			}
 		} else {
-			if(!moveTokenManager.move){
-				moveTokenManager.SetupTokenMove();
-			}
-			if(!moveTokenManager.MoveTokensToFillEmptySpaces()){
-				repopulateManager.AddNewTokensToRepopulateGrid();
-			}
+			//if(!moveTokenManager.move){
+			//	moveTokenManager.SetupTokenMove();
+			//}
+			//if(!moveTokenManager.MoveTokensToFillEmptySpaces()){
+			//	repopulateManager.AddNewTokensToRepopulateGrid();
+			//}
 		}
+	}
+
+	public string SayMyName(bool isOn)
+	{
+		return "stuff";
 	}
 
 	void MakeGrid() {
@@ -65,25 +70,13 @@ public class GameManagerScript : MonoBehaviour {
 		return false;
 	}
 
-
-	public Vector2 GetPositionOfTokenInGrid(GameObject token){
-		for(int x = 0; x < gridWidth; x++){
-			for(int y = 0; y < gridHeight ; y++){
-				if(gridArray[x, y] == token){
-					return(new Vector2(x, y));
-				}
-			}
-		}
-		return new Vector2();
-	}
-		
 	public Vector2 GetWorldPositionFromGridPosition(int x, int y){
 		return new Vector2(
 			(x - gridWidth/2) * tokenSize,
 			(y - gridHeight/2) * tokenSize);
 	}
 
-	public void AddTokenToPosInGrid(int x, int y, GameObject parent){
+	public void AddBigTokenToPosInGrid(int x, int y, GameObject parent){
 		Vector3 position = GetWorldPositionFromGridPosition(x, y);
 		GameObject token = 
 			Instantiate(tokenTypes[Random.Range(0, tokenTypes.Length)], 
