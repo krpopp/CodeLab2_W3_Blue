@@ -86,7 +86,7 @@ public class LZMatchManager : MatchManagerScript
 
     }
 
-    // remove the vertical tokens, plus the horiztonal tokens based on the original method
+    // remove the vertical and horizontal tokens
     public override int RemoveMatches()
     {
         int numRemoved = base.RemoveMatches();
@@ -95,6 +95,22 @@ public class LZMatchManager : MatchManagerScript
         {
             for (int y = 0; y < gameManager.gridHeight; y++)
             {
+                if (x < gameManager.gridWidth - 2)
+                {
+                    int horizontalMatchLength = GetHorizontalMatchLength(x, y);
+
+                    if (horizontalMatchLength > 2)
+                    {
+                        for (int i = x; i < x + horizontalMatchLength; i++)
+                        {
+                            GameObject token = gameManager.gridArray[i, y];
+                            Destroy(token);
+
+                            gameManager.gridArray[i, y] = null;
+                            numRemoved++;
+                        }
+                    }
+                }
                 if (y < gameManager.gridHeight - 2)
                 {
                     int verticalMatchLength = GetVerticalMatchLength(x, y);
