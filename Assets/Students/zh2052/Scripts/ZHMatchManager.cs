@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class ZHMatchManager : MatchManagerScript
 {
-	//protected GameManagerScript gameManager;
+	protected ZHBtnScript btnScript;
 
-	public override bool GridHasMatch()
+    public override void Start()
+    {
+        base.Start();
+		btnScript = GameObject.Find("Bomb").GetComponent<ZHBtnScript>();
+    }
+
+    //protected GameManagerScript gameManager;
+
+    public override bool GridHasMatch()
 	{
 		bool hasMatch = base.GridHasMatch();
 		for (int x = 0; x < gameManager.gridWidth; x++)
@@ -180,6 +188,11 @@ public class ZHMatchManager : MatchManagerScript
 					if (horizonMatchLength > 2)
 					{
 
+						if(horizonMatchLength > 3)
+                        {
+							btnScript.BombNum++;
+                        }
+
 						for (int i = x; i < x + horizonMatchLength; i++)
 						{
 							int verticalLengthUp = GetVerticalMatchLengthUp(i, y);
@@ -237,6 +250,11 @@ public class ZHMatchManager : MatchManagerScript
 							gameManager.gridArray[x, i] = null;
 							numRemoved++;
 						}
+
+                        if (verticalMatchLength > 3)
+                        {
+							btnScript.BombNum++;
+                        }
 					}
 				}
 			}
