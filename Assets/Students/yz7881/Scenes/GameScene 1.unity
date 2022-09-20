@@ -135,8 +135,8 @@ GameObject:
   - component: {fileID: 636344696}
   - component: {fileID: 636344699}
   - component: {fileID: 636344701}
-  - component: {fileID: 636344702}
   - component: {fileID: 636344703}
+  - component: {fileID: 636344702}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -208,7 +208,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 636344695}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4beb52c34f83d421f8472705132550c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 06cb81044c12a1745ad62ef746c28664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &636344703
@@ -220,12 +220,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 636344695}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d53e1e103383b463bb14e82a97df79fc, type: 3}
+  m_Script: {fileID: 11500000, guid: 0926bc8bb820a6142b2662d5b2b3fcc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   move: 0
   lerpPercent: 0
-  lerpSpeed: 0.01
+  lerpSpeed: 0.1
 --- !u!1 &853697441
 GameObject:
   m_ObjectHideFlags: 0
