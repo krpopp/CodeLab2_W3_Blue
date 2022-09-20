@@ -80,9 +80,142 @@ public class ZHMatchManager : MatchManagerScript
 		return matchLength;
 	}
 
-    public override int RemoveMatches()
+	public int GetVerticalMatchLengthDown(int x, int y)
+	{
+		int matchDownLength = 1;
+
+		// get the first token
+		GameObject first = gameManager.gridArray[x, y];
+
+		if (first != null)
+		{
+
+			// get the sprite of the first token
+			SpriteRenderer sr1 = first.GetComponent<SpriteRenderer>();
+
+			// find how many tokens have the same sprite as the first token's on the same horizontal line
+			for (int i = y + 1; i < gameManager.gridHeight; i++)
+			{
+				GameObject other = gameManager.gridArray[x, i];
+
+				if (other != null)
+				{
+					SpriteRenderer sr2 = other.GetComponent<SpriteRenderer>();
+
+					if (sr1.sprite == sr2.sprite)
+					{
+						matchDownLength++;
+					}
+					else
+					{
+						break;
+					}
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+		return matchDownLength;
+
+	}
+
+	public int GetVerticalMatchLengthUp(int x, int y)
+	{
+		int matchUpLength = 1;
+
+		// get the first token
+		GameObject first = gameManager.gridArray[x, y];
+
+		if (first != null)
+		{
+
+			// get the sprite of the first token
+			SpriteRenderer sr1 = first.GetComponent<SpriteRenderer>();
+
+			// find how many tokens have the same sprite as the first token's on the same horizontal line
+			for (int i = y - 1; i > 0; i--)
+			{
+				GameObject other = gameManager.gridArray[x, i];
+
+				if (other != null)
+				{
+					SpriteRenderer sr2 = other.GetComponent<SpriteRenderer>();
+
+					if (sr1.sprite == sr2.sprite)
+					{
+						matchUpLength++;
+					}
+					else
+					{
+						break;
+					}
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+		return matchUpLength;
+
+	}
+
+	public override int RemoveMatches()
     {
-		int numRemoved = base.RemoveMatches();
+		int numRemoved = 0;
+
+		
+
+		for (int x = 0; x < gameManager.gridWidth; x++)
+		{
+			for (int y = 0; y < gameManager.gridHeight; y++)
+			{
+				if (x < gameManager.gridWidth - 2)
+				{
+
+					int horizonMatchLength = GetHorizontalMatchLength(x, y);
+
+					if (horizonMatchLength > 2)
+					{
+
+						for (int i = x; i < x + horizonMatchLength; i++)
+						{
+							int verticalLengthUp = GetVerticalMatchLengthUp(i, y);
+							int verticalLengthDown = GetVerticalMatchLengthDown(i, y);
+
+							if (verticalLengthDown + verticalLengthUp > 2)
+                            {
+								for (int j = y + 1; j < y + verticalLengthDown; j++)
+								{
+									GameObject verticalToken = gameManager.gridArray[i, j];
+									Destroy(verticalToken);
+
+									gameManager.gridArray[i, j] = null;
+									numRemoved++;
+								}
+
+								for (int j = y - 1; j > y - verticalLengthUp; j--)
+								{
+									GameObject verticalToken = gameManager.gridArray[i, j];
+									Destroy(verticalToken);
+
+									gameManager.gridArray[i, j] = null;
+									numRemoved++;
+								}
+							}
+
+							GameObject token = gameManager.gridArray[i, y];
+							Destroy(token);
+
+							gameManager.gridArray[i, y] = null;
+							numRemoved++;
+						}
+					}
+				}
+			}
+		}
 
 		for (int x = 0; x < gameManager.gridWidth; x++)
 		{
@@ -95,9 +228,9 @@ public class ZHMatchManager : MatchManagerScript
 
 					if (verticalMatchLength > 2)
 					{
-
 						for (int i = y; i < y + verticalMatchLength; i++)
 						{
+
 							GameObject token = gameManager.gridArray[x, i];
 							Destroy(token);
 
