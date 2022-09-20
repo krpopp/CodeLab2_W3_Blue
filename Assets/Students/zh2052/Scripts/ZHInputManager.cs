@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class ZHInputManager : InputManagerScript
 {
-	public int bombNum = 1;
-	public bool bombClicked;
 	protected ZHBtnScript btnScript;
+
+	//private int bombNum;
+
+	private bool bombClicked;
+
+	public bool BombClicked
+    {
+		get { return bombClicked; }
+		set { bombClicked = value; }
+    }
 
     public override void Start()
     {
         base.Start();
 		btnScript = GameObject.Find("Bomb").GetComponent<ZHBtnScript>();
     }
-
-    private void Update()
-    {
-		bombClicked = btnScript.bombClicked;
-		Debug.Log(bombClicked);
-	}
 
     public override void SelectToken()
     {
@@ -57,6 +59,8 @@ public class ZHInputManager : InputManagerScript
                                 }
                             }
                         }
+
+						btnScript.BombNum--;
 
 						selected = null;
 						bombClicked = false;
