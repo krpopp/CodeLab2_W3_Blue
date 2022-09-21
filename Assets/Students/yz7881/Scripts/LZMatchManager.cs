@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LZMatchManager : MatchManagerScript
 {
+
     public override bool GridHasMatch()
     {
         bool hasMatch = base.GridHasMatch();
@@ -89,7 +90,7 @@ public class LZMatchManager : MatchManagerScript
     // remove the vertical and horizontal tokens
     public override int RemoveMatches()
     {
-        int numRemoved = base.RemoveMatches();
+        int numRemoved = 0;
 
         for (int x = 0; x < gameManager.gridWidth; x++)
         {
@@ -104,6 +105,10 @@ public class LZMatchManager : MatchManagerScript
                         for (int i = x; i < x + horizontalMatchLength; i++)
                         {
                             GameObject token = gameManager.gridArray[i, y];
+                            if (token.GetComponent<SpriteRenderer>().sprite.name == GetComponent<LZGameManager>().colorName)
+                            {
+                                GetComponent<LZGameManager>().deleteNumber -= 1;
+                            }
                             Destroy(token);
 
                             gameManager.gridArray[i, y] = null;
@@ -121,6 +126,10 @@ public class LZMatchManager : MatchManagerScript
                         for (int i = y; i < y + verticalMatchLength; i++)
                         {
                             GameObject token = gameManager.gridArray[x, i];
+                            if (token.GetComponent<SpriteRenderer>().sprite.name == GetComponent<LZGameManager>().colorName)
+                            {
+                                GetComponent<LZGameManager>().deleteNumber -= 1;
+                            }
                             Destroy(token);
 
                             gameManager.gridArray[x, i] = null;
