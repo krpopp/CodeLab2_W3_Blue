@@ -541,8 +541,10 @@ MonoBehaviour:
   - purple
   deleteNumber: 0
   colorName: 
+  timeLeft: 0
   textNumber: {fileID: 480891360}
   textColor: {fileID: 986326656}
+  textTime: {fileID: 1999064973}
 --- !u!1 &853697441
 GameObject:
   m_ObjectHideFlags: 0
