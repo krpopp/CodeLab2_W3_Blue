@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ZGameManager : MonoBehaviour
+public class ZGameManager : GameManagerScript
 {
-    // Start is called before the first frame update
-    void Start()
+    RectTransform rect;
+
+    //called before the first frame update
+    public override void Start()
     {
-        
+        base.Start();
+
+        tokenTypes = (Object[])Resources.LoadAll("Prefabs/"); //grabbing prefabs
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
