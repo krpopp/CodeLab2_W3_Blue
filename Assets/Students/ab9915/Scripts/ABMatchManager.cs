@@ -20,7 +20,7 @@ public class ABMatchManager : MatchManagerScript
 
     public bool GridHasVerticalMatch(int x, int y)
     {
-        GameObject token1 = gameManager.gridArray[x, y];
+        GameObject token1 = gameManager.gridArray[x, y + 0];
 		GameObject token2 = gameManager.gridArray[x, y + 1];
 		GameObject token3 = gameManager.gridArray[x, y + 2];
 		
@@ -43,8 +43,8 @@ public class ABMatchManager : MatchManagerScript
 		if(first != null){
 			SpriteRenderer sr1 = first.GetComponent<SpriteRenderer>();
 			
-			for(int i = x + 1; i < gameManager.gridWidth; i++){
-				GameObject other = gameManager.gridArray[i, y];
+			for(int i = y + 1; i < gameManager.gridWidth; i++){
+				GameObject other = gameManager.gridArray[x, i];
 
 				if(other != null){
 					SpriteRenderer sr2 = other.GetComponent<SpriteRenderer>();
@@ -65,6 +65,8 @@ public class ABMatchManager : MatchManagerScript
 
     public override int RemoveMatches()
     {
+        base.RemoveMatches();
+
         int numRemoved = 0;
 
         for(int x = 0; x < gameManager.gridWidth; x++){
@@ -75,7 +77,7 @@ public class ABMatchManager : MatchManagerScript
 
 					if(verticalMatchLength > 2){
 
-						for(int i = x; i < x + verticalMatchLength; i++){
+						for(int i = y; i < y + verticalMatchLength; i++){
 							GameObject token = gameManager.gridArray[x, i]; 
 							Destroy(token);
 
