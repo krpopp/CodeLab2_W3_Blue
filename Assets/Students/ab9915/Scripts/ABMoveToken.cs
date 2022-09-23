@@ -6,6 +6,7 @@ public class ABMoveToken : MoveTokensScript
 {
     public override void Update()
     {
+        //override fix to set to normalised framerate across all devices
         if(move){
 			lerpPercent += lerpSpeed * Time.deltaTime;
 
@@ -20,6 +21,7 @@ public class ABMoveToken : MoveTokensScript
     }
     public override bool MoveTokensToFillEmptySpaces()
     {
+        //override to fix token jumping?
 		bool movedToken = false;
 
 		for (int x = 0; x < gameManager.gridWidth; x++)
