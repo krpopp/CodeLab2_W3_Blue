@@ -11,8 +11,9 @@ public class ZGameManager : GameManagerScript
     public override void Start()
     {
         base.Start();
+        //got it to work but ultimately not needed
+        //tokenTypes = (Object[])Resources.LoadAll("Prefabs/"); //grabbing prefabs
 
-        tokenTypes = (Object[])Resources.LoadAll("Prefabs/"); //grabbing prefabs
     }
 
 }
