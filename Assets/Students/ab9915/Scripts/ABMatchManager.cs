@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ABMatchManager : MatchManagerScript
 {
+
+    public AudioSource source;
+    public AudioClip clip;
+
+    //function to check for matches in the grid which has been extended to find vertical matches as well
     public override bool GridHasMatch()
     {
         bool hasAMatch = base.GridHasMatch();
@@ -18,6 +23,7 @@ public class ABMatchManager : MatchManagerScript
         return hasAMatch;
     }
 
+    //function to find if there are vertical matches
     public bool GridHasVerticalMatch(int x, int y)
     {
         GameObject token1 = gameManager.gridArray[x, y + 0];
@@ -35,6 +41,7 @@ public class ABMatchManager : MatchManagerScript
 		}
     }
 
+    //function to get the veritical match length to check if it is three or over
     public int GetVerticalMatchLength(int x, int y){
 		int matchLength = 1;
 		
@@ -63,11 +70,31 @@ public class ABMatchManager : MatchManagerScript
 		return matchLength;
 	}
 
+    //Removes matches horizontally and vertically if it finds one. Doesn't remove both Horizontal and Vertical match at the same time. Only one of those if there are both horizontal and vertical match at the same time
     public override int RemoveMatches()
     {
-        base.RemoveMatches();
-
         int numRemoved = 0;
+
+		for(int x = 0; x < gameManager.gridWidth; x++){
+			for(int y = 0; y < gameManager.gridHeight ; y++){
+				if(x < gameManager.gridWidth - 2){
+
+					int horizonMatchLength = GetHorizontalMatchLength(x, y);
+
+					if(horizonMatchLength > 2){
+
+						for(int i = x; i < x + horizonMatchLength; i++){
+							GameObject token = gameManager.gridArray[i, y]; 
+							Destroy(token);
+                            source.PlayOneShot(clip); //plays Mario coin audio whenever a match is removed horizontally
+
+							gameManager.gridArray[i, y] = null;
+							numRemoved++;
+						}
+					}
+				}
+			}
+		}
 
         for(int x = 0; x < gameManager.gridWidth; x++){
 			for(int y = 0; y < gameManager.gridHeight ; y++){
@@ -80,6 +107,8 @@ public class ABMatchManager : MatchManagerScript
 						for(int i = y; i < y + verticalMatchLength; i++){
 							GameObject token = gameManager.gridArray[x, i]; 
 							Destroy(token);
+                            source.PlayOneShot(clip); //plays Mario coin audio whenever a match is removed vertically
+                            
 
 							gameManager.gridArray[x, i] = null;
 							numRemoved++;

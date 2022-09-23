@@ -21,7 +21,6 @@ public class ABMoveToken : MoveTokensScript
     }
     public override bool MoveTokensToFillEmptySpaces()
     {
-        //override to fix token jumping?
 		bool movedToken = false;
 
 		for (int x = 0; x < gameManager.gridWidth; x++)
@@ -39,7 +38,7 @@ public class ABMoveToken : MoveTokensScript
 							movedToken = true;
 						}
 					}
-					break;
+					break; //override to fix token jumping? I took this from the class example script(KPMoveToken) but I'm unsure why this break is here
 				}
 			}
 		}
