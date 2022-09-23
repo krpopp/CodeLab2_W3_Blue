@@ -6,8 +6,6 @@ public class ZHInputManager : InputManagerScript
 {
 	protected ZHBtnScript btnScript;
 
-	//private int bombNum;
-
 	private bool bombClicked;
 
 	public bool BombClicked
@@ -38,19 +36,27 @@ public class ZHInputManager : InputManagerScript
 				{
 					Debug.Log("selected");
 
+					// if the bomb button is clicked, blow up the token surrounding the selected token
 					if (bombClicked == true)
 					{
 						Debug.Log("Boom");
 
+						// set the currently clicked token the selected
 						selected = collider.gameObject;
+
+						// get the position of the selected token
 						Vector2 pos = gameManager.GetPositionOfTokenInGrid(selected);
 
+						// blow up 3 * 3 tokens
 						for(int x = (int)(pos.x - 1); x <= (int)(pos.x + 1); x++)
                         {
 							for (int y = (int)(pos.y - 1); y <= (int)(pos.y + 1); y++)
                             {
+								// see if the token is within the range of the grid
 								if(x >= 0 && x < gameManager.gridWidth && y >= 0 && y < gameManager.gridHeight)
                                 {
+
+									// destroy the tokens and set them to 
 									GameObject token = gameManager.gridArray[x, y];
 									Destroy(token);
 
@@ -60,9 +66,13 @@ public class ZHInputManager : InputManagerScript
                             }
                         }
 
+						// 1 bomb is used
 						btnScript.BombNum--;
 
+						// unselect the token
 						selected = null;
+
+						// reset the bomb button
 						bombClicked = false;
 					}
                     else

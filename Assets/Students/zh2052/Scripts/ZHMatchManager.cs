@@ -188,6 +188,7 @@ public class ZHMatchManager : MatchManagerScript
 					if (horizonMatchLength > 2)
 					{
 
+						// if more than 3 tokens are matched, add 1 bomb
 						if(horizonMatchLength > 3)
                         {
 							btnScript.BombNum++;
